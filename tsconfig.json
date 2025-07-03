@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "esnext",
+    "lib": ["dom", "esnext"],
+    "strict": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "outDir": "dist",
+    "baseUrl": ".",                            
+    "paths": {
+      "~/*": ["src/*"], 
+      "~/ui/*": ["src/ui"],
+      "~/system": ["src/system"] 
+    }
+  },
+  "include": ["src", "src/**/*.json", "src/**/*.html"]
+}
