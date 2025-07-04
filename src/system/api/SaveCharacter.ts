@@ -61,7 +61,7 @@ export class SaveCharacter {
 
       downloadJSON(payloadWithUser, 'character.json')
 
-      const response = await this.api.post<ApiResponse>('/api/savecharacter', payloadWithUser)
+      const response = await this.api.post<ApiResponse>('/api/CharacterExtract', payloadWithUser)
 
       return response
     } catch (error) {
