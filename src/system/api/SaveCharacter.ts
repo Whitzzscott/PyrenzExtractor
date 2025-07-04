@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { Api } from '~/configs/Api'
+import { supabase } from '~/configs/Supabase'
 
 const CharacterSchema = z.object({
   name: z.string(),
@@ -18,7 +19,7 @@ const CharacterSchema = z.object({
   lorebook: z.string().optional(),
 })
 
-function downloadJSON(data: z.infer<typeof CharacterSchema>, filename: string): void {
+function downloadJSON(data: z.infer<typeof CharacterSchema> & { user_uuid: string }, filename: string): void {
   const jsonStr = JSON.stringify(data, null, 2)
   const blob = new Blob([jsonStr], { type: 'application/json' })
   const url = URL.createObjectURL(blob)
@@ -44,9 +45,23 @@ export class SaveCharacter {
     try {
       const validatedData = CharacterSchema.parse(data)
 
-      downloadJSON(validatedData, 'character.json')
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser()
 
-      const response = await this.api.post<ApiResponse>('/api/savecharacter', validatedData)
+      if (authError || !user) {
+        throw new Error('User not authenticated')
+      }
+
+      const payloadWithUser = {
+        ...validatedData,
+        user_uuid: user.id,
+      }
+
+      downloadJSON(payloadWithUser, 'character.json')
+
+      const response = await this.api.post<ApiResponse>('/api/savecharacter', payloadWithUser)
 
       return response
     } catch (error) {

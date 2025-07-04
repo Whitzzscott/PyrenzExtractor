@@ -113,7 +113,7 @@ export function MenuUI({ onClose }: MenuUIProps) {
         >
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
             <Typography variant="h6" fontWeight={500}>
-              Pyrenz Menu
+              PyrenzAI Extractor Menu
             </Typography>
           </Box>
           <ButtonMenu showAlert={triggerAlert} />
