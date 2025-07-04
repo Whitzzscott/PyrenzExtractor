@@ -15,7 +15,7 @@ export class SupabaseConfig {
 export class Api {
   private baseUrl: string
 
-  constructor(baseUrl: string = 'http://api.pyrenzai.com') {
+  constructor(baseUrl: string = 'https://api.pyrenzai.com') {
     this.baseUrl = baseUrl
   }
 
