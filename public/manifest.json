@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "PyrenzAI Extractor",
   "version": "1.0",
-  "description": "Extracts ChubAI and CharacterAI characters",
+  "description": "Extracts ChubAI and CharacterAI characters And many more",
   "permissions": ["storage", "scripting"],
   "host_permissions": ["<all_urls>"],
   "action": {

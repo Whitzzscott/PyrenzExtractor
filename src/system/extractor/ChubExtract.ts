@@ -3,32 +3,15 @@ import { SaveCharacter } from '~/system'
 async function fetchData(url: string, payload: any = {}): Promise<any> {
   const queryParams = new URLSearchParams(payload).toString()
   const urlWithQuery = `${url}?${queryParams}`
-
   const headers: HeadersInit = {}
-
   const response = await fetch(urlWithQuery, {
     method: 'GET',
     headers,
   })
-
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`)
   }
-
   return response.json()
-}
-
-function downloadJSON(data: any, filename: string) {
-  const jsonStr = JSON.stringify(data, null, 2)
-  const blob = new Blob([jsonStr], { type: 'application/json' })
-  const url = URL.createObjectURL(blob)
-
-  const a = document.createElement('a')
-  a.href = url
-  a.download = filename
-  a.click()
-
-  URL.revokeObjectURL(url)
 }
 
 export async function ChubAiExtract(
@@ -39,6 +22,7 @@ export async function ChubAiExtract(
 
   const currentUrl = window.location.href
   const isChubAi = currentUrl.startsWith('https://chub.ai/characters/')
+
   if (!isChubAi) {
     showAlert('Not a ChubAI character URL', 'error')
     return
@@ -64,7 +48,6 @@ export async function ChubAiExtract(
     }
 
     const def = data.node.definition
-
     const characterData = {
       name: def.name || data.node.name || 'Anon',
       description: def.description || '',
@@ -81,9 +64,6 @@ export async function ChubAiExtract(
 
     const saveCharacter = new SaveCharacter()
     await saveCharacter.save(characterData)
-
-    downloadJSON(characterData, 'output.json')
-
     showAlert('Character saved successfully!', 'success')
   } catch (error) {
     showAlert(

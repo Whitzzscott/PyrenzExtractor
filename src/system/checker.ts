@@ -17,6 +17,7 @@ export class Checker {
   }
 
   checkDomain(): string {
-    return window.location.hostname
+    const hostname = window.location.hostname
+    return hostname.startsWith('www.') ? hostname.slice(4) : hostname
   }
 }

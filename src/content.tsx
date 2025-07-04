@@ -6,7 +6,7 @@ import { Checker } from '~/system'
 import { MenuUI, LoginModal } from '~/ui'
 import { pyrenzTheme } from '~/ui/theme'
 
-const allowedDomains = ['chub.ai', 'character.ai']
+const allowedDomains = ['chub.ai', 'character.ai', 'anime.gf']
 const checker = new Checker(allowedDomains)
 
 async function checkUser() {
@@ -41,16 +41,23 @@ function mountToBody(component: React.ReactElement) {
   }
 }
 
+const currentDomain = checker.checkDomain()
+
 if (checker.isDomainAllowed()) {
-  checkUser().then((isLoggedIn) => {
-    if (isLoggedIn) {
-      const handleClose = mountToBody(<MenuUI onClose={() => handleClose()} />)
-      console.log('Content script loaded successfully!')
-    } else {
-      const handleClose = mountToBody(<LoginModal open={true} onClose={() => handleClose()} />)
-      console.log('User not logged in, showing login modal.')
-    }
-  })
+  if (currentDomain === 'anime.gf') {
+    const handleClose = mountToBody(<MenuUI onClose={() => handleClose()} />)
+    console.log('Anime.gf override: Content script loaded without login ✨')
+  } else {
+    checkUser().then((isLoggedIn) => {
+      if (isLoggedIn) {
+        const handleClose = mountToBody(<MenuUI onClose={() => handleClose()} />)
+        console.log('Content script loaded successfully!')
+      } else {
+        const handleClose = mountToBody(<LoginModal open={true} onClose={() => handleClose()} />)
+        console.log('User not logged in, showing login modal.')
+      }
+    })
+  }
 } else {
   console.log('Domain not allowed. Extension not rendered.')
 }

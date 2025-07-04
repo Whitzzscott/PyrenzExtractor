@@ -1,18 +1,5 @@
 import { SaveCharacter } from '~/system'
 
-function downloadJSON(data: any, filename: string) {
-  const jsonStr = JSON.stringify(data, null, 2)
-  const blob = new Blob([jsonStr], { type: 'application/json' })
-  const url = URL.createObjectURL(blob)
-
-  const a = document.createElement('a')
-  a.href = url
-  a.download = filename
-  a.click()
-
-  URL.revokeObjectURL(url)
-}
-
 export async function CharacterAIExtract(
   trigger: boolean,
   showAlert: (message: string, mode: 'success' | 'error') => void
@@ -21,6 +8,7 @@ export async function CharacterAIExtract(
 
   const currentUrl = window.location.href
   const isCharacterAI = currentUrl.startsWith('https://character.ai/chat/')
+
   if (!isCharacterAI) {
     showAlert('Not a CharacterAI chat URL', 'error')
     return
@@ -28,6 +16,7 @@ export async function CharacterAIExtract(
 
   const urlParts = currentUrl.split('/')
   const externalId = urlParts[urlParts.length - 1]
+
   if (!externalId) {
     showAlert('No external ID found in the URL', 'error')
     return
@@ -52,6 +41,7 @@ export async function CharacterAIExtract(
     }
 
     const data = await response.json()
+
     if (!data.character) {
       showAlert('Character data not found', 'error')
       return
@@ -73,9 +63,6 @@ export async function CharacterAIExtract(
 
     const saveCharacter = new SaveCharacter()
     await saveCharacter.save(characterData)
-
-    downloadJSON(characterData, 'output.json')
-
     showAlert('CharacterAI character saved successfully!', 'success')
   } catch (error) {
     showAlert(
