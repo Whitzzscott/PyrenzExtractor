@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "PyrenzAI Extractor",
+  "version": "1.0",
+  "description": "Extracts ChubAI and CharacterAI characters",
+  "permissions": ["storage", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["index.css"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "pyrenz@extractor",
+      "strict_min_version": "109.0"
+    }
+  }
+}

@@ -7,14 +7,15 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "outDir": "dist",
-    "baseUrl": ".",                            
+    "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"], 
-      "~/ui/*": ["src/ui"],
-      "~/system": ["src/system"] 
-    }
+      "~/*": ["src/*"],
+      "~/ui/*": ["src/ui/*"],
+      "~/system": ["src/system"]
+    },
+    "types": ["vite/client", "react", "react-dom", "chrome"]
   },
   "include": ["src", "src/**/*.json", "src/**/*.html"]
 }
