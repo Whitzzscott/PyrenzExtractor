@@ -4,7 +4,7 @@
   "version": "1.0",
   "description": "Extracts ChubAI and CharacterAI characters And many more",
   "permissions": ["storage", "scripting"],
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": ["*://sakura.fm/*", "*://anime.gf/*", "*://character.ai/*"],
   "action": {
     "default_icon": {
       "16": "icons/16.png",

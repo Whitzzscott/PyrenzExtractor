@@ -47,7 +47,7 @@ export class SaveCharacter {
       downloadJSON(validatedData, 'character.json')
 
       const response = await this.api.post<ApiResponse>('/api/savecharacter', validatedData)
-    
+
       return response
     } catch (error) {
       console.error('Validation or saving failed:', error)
