@@ -27,7 +27,7 @@ export default defineConfig({
         content: resolve(__dirname, 'src/content.tsx'),
       },
       output: {
-        entryFileNames: '[name].[hash].js',
+        entryFileNames: '[name].js',
         assetFileNames: '[name].[hash].[ext]',
       },
     },
